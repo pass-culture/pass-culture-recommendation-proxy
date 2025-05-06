@@ -3,7 +3,9 @@ import os
 
 ENV = os.environ.get("ENV", "development")
 
-JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "")
+if not JWT_SECRET_KEY:
+    raise RuntimeError("Environment variable 'JWT_SECRET_KEY' is required but not set.")
 
 # Recommendation API
 RECOMMENDATION_API_AUTHENTICATION_TOKEN = os.environ.get("RECOMMENDATION_API_AUTHENTICATION_TOKEN")
