@@ -17,7 +17,7 @@ dependencies = [
     "certifi==2025.1.31",
     "cffi==1.17.1",
     "cryptography==44.0.2",
-    "fastapi==0.115.12",
+    "fastapi==0.128.0",
     "frozenlist==1.5.0",
     "idna==3.10",
     "multidict==6.4.3",
@@ -39,7 +39,7 @@ dependencies = [
 [project.optional-dependencies]
 dev=[
     "black==25.1.0",
-    "fastapi[standard]==0.115.12",
+    "fastapi[standard]==0.128.0",
     "commitizen==4.6.0",
     "isort==6.0.1",
     "mypy==1.15.0",
