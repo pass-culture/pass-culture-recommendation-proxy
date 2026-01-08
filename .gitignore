@@ -10,3 +10,6 @@ __pycache__/
 
 # environement management
 build
+
+# IntelliJ IDEA / PyCharm
+.idea/
