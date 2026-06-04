@@ -16,13 +16,13 @@ async def test_token_ok():
             "iat": int((datetime.datetime.now() - datetime.timedelta(seconds=10)).timestamp()),
             "nbf": int((datetime.datetime.now() - datetime.timedelta(seconds=10)).timestamp()),
             "exp": int((datetime.datetime.now() + datetime.timedelta(seconds=10)).timestamp()),
-            "user_claims": {"user_id": user_id},
+            "sub": str(user_id),
         },
         key=settings.JWT_SECRET_KEY,
         algorithm="HS256",
     )
     result = await JWTUserId(authorization=f"Bearer {token}")
-    assert result == user_id
+    assert result == str(user_id)
 
 
 @pytest.mark.asyncio
@@ -32,7 +32,7 @@ async def test_expired_token():
             "iat": int(datetime.datetime.now().timestamp()),
             "nbf": int(datetime.datetime.now().timestamp()),
             "exp": int((datetime.datetime.now() - datetime.timedelta(seconds=10)).timestamp()),
-            "user_claims": {"user_id": 123},
+            "sub": "123",
         },
         key=settings.JWT_SECRET_KEY,
         algorithm="HS256",
@@ -51,7 +51,7 @@ async def test_invalid_token():
             "iat": int(datetime.datetime.now().timestamp()),
             "nbf": int(datetime.datetime.now().timestamp()),
             "exp": int((datetime.datetime.now() + datetime.timedelta(seconds=10)).timestamp()),
-            "user_claims": {"user_id": 123},
+            "sub": "123",
         },
         key="INVALID_SECRET",
         algorithm="HS256",

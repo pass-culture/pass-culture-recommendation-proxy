@@ -23,6 +23,6 @@ async def JWTUserId(authorization: Annotated[str | None, fastapi.Header()] = Non
         except Exception:
             raise fastapi.HTTPException(status_code=401, detail="Invalid JWT")
 
-        user_id = token.get("user_claims", {}).get("user_id", None)
+        user_id = token.get("sub", None)
 
     return user_id
