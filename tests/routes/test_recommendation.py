@@ -20,7 +20,7 @@ def get_valid_jwt(user_id: int):
             "iat": int((datetime.datetime.now() - datetime.timedelta(seconds=10)).timestamp()),
             "nbf": int((datetime.datetime.now() - datetime.timedelta(seconds=10)).timestamp()),
             "exp": int((datetime.datetime.now() + datetime.timedelta(seconds=10)).timestamp()),
-            "user_claims": {"user_id": user_id},
+            "sub": str(user_id),
         },
         key=settings.JWT_SECRET_KEY,
         algorithm="HS256",
@@ -105,7 +105,7 @@ class SimilarOffersTest:
         with patch("pcproxy.routes.recommendation.RecommendationBackend", BackendMock):
             response = client.get(
                 self.route,
-                headers={"Authorization": f"Bearer {get_valid_jwt(user_id=123)}"},
+                headers={"Authorization": f"Bearer {get_valid_jwt(user_id="123")}"},
                 params=params,
             )
             assert response.status_code == 200
@@ -118,7 +118,7 @@ class SimilarOffersTest:
                     "subcategories": ["ZYX", "WVU"],
                     "search_group_names": ["JKL", "MNO", "PQR"],
                 },
-                user_id=123,
+                user_id="123",
             )
 
         assert response.json() == {
@@ -180,7 +180,7 @@ class PlaylistTest:
         with patch("pcproxy.routes.recommendation.RecommendationBackend", BackendMock):
             response = client.post(
                 self.route,
-                headers={"Authorization": f"Bearer {get_valid_jwt(user_id=123)}"},
+                headers={"Authorization": f"Bearer {get_valid_jwt(user_id="123")}"},
                 params={
                     "modelEndpoint": "some endpoint",
                     "longitude": 12.3456,
@@ -218,7 +218,7 @@ class PlaylistTest:
                     "isRecoShuffled": True,
                     "offerTypeList": [{"a": "1"}, {"b": "2"}],
                 },
-                user_id=123,
+                user_id="123",
             )
 
         assert response.json() == {
@@ -256,7 +256,7 @@ class PlaylistTest:
         with patch("pcproxy.routes.recommendation.RecommendationBackend", BackendMock):
             response = client.post(
                 self.route,
-                headers={"Authorization": f"Bearer {get_valid_jwt(user_id=123)}"},
+                headers={"Authorization": f"Bearer {get_valid_jwt(user_id="123")}"},
                 json={},
             )
             assert response.status_code == 200
@@ -278,7 +278,7 @@ class PlaylistTest:
                     "startDate": None,
                     "subcategories": None,
                 },
-                user_id=123,
+                user_id="123",
             )
 
         assert response.json() == {
@@ -302,7 +302,7 @@ class PlaylistTest:
         with patch("pcproxy.routes.recommendation.RecommendationBackend", BackendMock):
             response = client.post(
                 self.route,
-                headers={"Authorization": f"Bearer {get_valid_jwt(user_id=123)}"},
+                headers={"Authorization": f"Bearer {get_valid_jwt(user_id="123")}"},
                 json={},
             )
             assert response.status_code == 200
@@ -324,7 +324,7 @@ class PlaylistTest:
                     "startDate": None,
                     "subcategories": None,
                 },
-                user_id=123,
+                user_id="123",
             )
 
         assert response.json() == {
@@ -362,7 +362,7 @@ class PlaylistTest:
         with patch("pcproxy.routes.recommendation.RecommendationBackend", BackendMock):
             response = client.post(
                 self.route,
-                headers={"Authorization": f"Bearer {get_valid_jwt(user_id=123)}"},
+                headers={"Authorization": f"Bearer {get_valid_jwt(user_id="123")}"},
                 json={},
             )
             assert response.status_code == 504
@@ -376,7 +376,7 @@ class PlaylistTest:
         with patch("pcproxy.routes.recommendation.RecommendationBackend", BackendMock):
             response = client.post(
                 self.route,
-                headers={"Authorization": f"Bearer {get_valid_jwt(user_id=123)}"},
+                headers={"Authorization": f"Bearer {get_valid_jwt(user_id="123")}"},
                 json={},
             )
             assert response.status_code == 502
