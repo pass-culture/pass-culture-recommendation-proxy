@@ -51,6 +51,10 @@ class RecommendationBackend:
         params["userId"] = user_id
         return await self._request("get", path, params=params)
 
+    async def get_similar_artists(self, artist_id: str) -> dict:
+        path = f"/similar_artists/{artist_id}"
+        return await self._request("get", path, params={})
+
     async def get_playlist(self, user_id: int, params: dict, body: dict) -> dict:
         path = f"/playlist_recommendation/{user_id}"
         return await self._request("post", path, params=params, body=body)
