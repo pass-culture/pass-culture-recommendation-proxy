@@ -44,7 +44,11 @@ jobs:
             driver: docker
       - name: "Compute docker image name:tag"
         id: compute-image-name
-        run: echo "image_name=${{ env.docker_registry }}/${{env.image}}:${{ steps.define-tag.outputs.CHECKSUM_TAG }}" | tee -a ${GITHUB_OUTPUT}
+        run: echo "image_name=$DOCKER_REGISTRY/$IMAGE:$CHECKSUM_TAG" | tee -a "${GITHUB_OUTPUT}"
+        env:
+          DOCKER_REGISTRY: ${{ env.docker_registry }}
+          IMAGE: ${{ env.image }}
+          CHECKSUM_TAG: ${{ steps.define-tag.outputs.CHECKSUM_TAG }}
       - name: "Build ${{ steps.compute-image-name.outputs.image_name }} image"
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
