@@ -8,6 +8,13 @@ env:
   image: "recommendation-proxy"
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6
+        with:
+          persist-credentials: false
+      - uses: pass-culture/common-workflows/actions/actionlint-check@547f3df463509ca831922b667e6dc2d29f74e4e0 # actionlint/v0.3
   build-test-image:
     name: "Build tests image"
     runs-on: ubuntu-latest
